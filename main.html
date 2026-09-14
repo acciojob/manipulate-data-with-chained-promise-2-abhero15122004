@@ -14,36 +14,52 @@
 
         function manipulateData() {
 
-            // Initial array
             const numbers = [1, 2, 3, 4];
 
-            // First Promise
+            // Initial Promise
+            // Resolves after 3 seconds
             return new Promise((resolve) => {
                 setTimeout(() => {
                     resolve(numbers);
-                }, 1000);
+                }, 3000);
             })
 
-            // First transformation - filter even numbers
+            // First Transformation
+            // Filter out odd numbers
             .then((numbers) => {
-                const evenNumbers = numbers.filter(number => number % 2 === 0);
 
+                const evenNumbers = numbers.filter(
+                    number => number % 2 === 0
+                );
+
+                // Wait 1 second before displaying
                 return new Promise((resolve) => {
                     setTimeout(() => {
+
                         output.textContent = evenNumbers;
+
                         resolve(evenNumbers);
-                    }, 0);
+
+                    }, 1000);
                 });
             })
 
-            // Second transformation - multiply by 2
+            // Second Transformation
+            // Multiply even numbers by 2
             .then((evenNumbers) => {
-                const multipliedNumbers = evenNumbers.map(number => number * 2);
 
+                const multipliedNumbers = evenNumbers.map(
+                    number => number * 2
+                );
+
+                // Wait 2 seconds before displaying
                 return new Promise((resolve) => {
                     setTimeout(() => {
+
                         output.textContent = multipliedNumbers;
+
                         resolve(multipliedNumbers);
+
                     }, 2000);
                 });
             });
