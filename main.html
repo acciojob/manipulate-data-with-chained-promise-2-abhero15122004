@@ -16,41 +16,44 @@
 
             const numbers = [1, 2, 3, 4];
 
-            // Initial Promise
-            // Resolves after 3 seconds
+            // Initial Promise - 3 seconds
             const initialPromise = new Promise((resolve) => {
                 setTimeout(() => {
                     resolve(numbers);
                 }, 3000);
             });
 
-            // First transformation
-            // Starts immediately and displays after 1 second
-            const firstTransformation = new Promise((resolve) => {
-                setTimeout(() => {
+            // Chain the transformations to the initial promise
+            initialPromise
+                .then((numbers) => {
 
+                    // Filter out odd numbers
                     const evenNumbers = numbers.filter(
                         number => number % 2 === 0
                     );
 
-                    output.textContent = evenNumbers;
-
-                    resolve(evenNumbers);
-
-                }, 1000);
-            });
-
-            // Second transformation
-            // Starts after the first transformation
-            firstTransformation
-                .then((evenNumbers) => {
-
+                    // First transformation delay - 1 second
                     return new Promise((resolve) => {
                         setTimeout(() => {
 
-                            const multipliedNumbers = evenNumbers.map(
-                                number => number * 2
-                            );
+                            output.textContent = evenNumbers;
+
+                            resolve(evenNumbers);
+
+                        }, 1000);
+                    });
+                })
+
+                .then((evenNumbers) => {
+
+                    // Multiply even numbers by 2
+                    const multipliedNumbers = evenNumbers.map(
+                        number => number * 2
+                    );
+
+                    // Second transformation delay - 2 seconds
+                    return new Promise((resolve) => {
+                        setTimeout(() => {
 
                             output.textContent = multipliedNumbers;
 
@@ -58,12 +61,10 @@
 
                         }, 2000);
                     });
-
                 });
-
-            return initialPromise;
         }
 
+        // Execute the function
         manipulateData();
     </script>
 
